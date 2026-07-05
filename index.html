@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>今日のパパ日記｜匿名でシェアする体験談コミュニティ</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="header">
+  <div class="container hero-head">
+    <div class="logo">📖</div>
+    <div><div class="site-title">今日のパパ日記</div><div class="subtitle">匿名でシェアする体験談コミュニティ 💗</div></div>
+    <div class="auth"><a class="btn" href="#post">👤 ログイン</a><a class="btn primary" href="#post">無料会員登録</a></div>
+  </div>
+  <nav class="container nav">
+    <a class="active" href="#">🏠 ホーム</a><a href="#search">🔍 口コミを探す</a><a href="#ranking">♛ ランキング</a><a href="#post">🖊 投稿する</a><a href="rules.html">⚠ 投稿ルール</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="copy">
+        <h1>無料で口コミを書ける匿名コミュニティ。</h1>
+        <p>今日の出会いが、明日の参考になる。</p>
+        <div id="search" class="search-row"><div class="search">📍 <input id="searchInput" placeholder="地域・タイトル・カテゴリで検索"></div><button class="btn primary" id="searchBtn" type="button">検索</button></div>
+      </div>
+      <div class="counter"><span>現在の投稿数</span><b id="postCount">---</b><small>Supabaseから自動表示</small></div>
+    </div>
+
+    <div class="categories">
+      <a class="cat green" href="#posts" data-category="良いパパさん"><div class="mark">👍</div><div><h3>良いパパさん</h3><p>優しくて紳士的だった✨</p></div></a>
+      <a class="cat red" href="#posts" data-category="注意したいパパさん"><div class="mark">⚠</div><div><h3>注意したいパパさん</h3><p>トラブル・要注意な体験</p></div></a>
+      <a class="cat pink" href="#posts" data-category="良いPJさん"><div class="mark">♡</div><div><h3>良いPJさん</h3><p>素敵な時間をありがとう💗</p></div></a>
+      <a class="cat orange" href="#posts" data-category="注意したいPJさん"><div class="mark">!</div><div><h3>注意したいPJさん</h3><p>気をつけてほしい体験</p></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="container main">
+  <div class="panel" id="posts"><div class="panel-head"><h2>🕘 最新の投稿</h2><button class="more" id="reloadBtn" type="button">更新する</button></div><div class="posts" id="postsList"><p class="meta">投稿を読み込み中...</p></div></div>
+  <aside class="panel" id="ranking"><div class="panel-head"><h2>👑 人気投稿ランキング</h2></div><div class="ranking" id="rankingList"><small class="meta">投稿が増えると、人気順で表示されます。</small></div></aside>
+</section>
+
+<section class="container">
+  <div class="features">
+    <div class="feature"><span>♙</span><div>完全匿名で安心<br><small>個人情報は表示されません</small></div></div>
+    <div class="feature"><span>▧</span><div>写真は1枚まで<br><small>1投稿につき1枚アップ可能</small></div></div>
+    <div class="feature"><span>☆</span><div>利用無料<br><small>まずは無料で口コミを増やす設計</small></div></div>
+    <div class="feature"><span>▣</span><div>通報対応<br><small>投稿ごとに通報できます</small></div></div>
+  </div>
+</section>
+
+<section class="container panel" id="post">
+  <div class="panel-head"><h2>🖊 体験談を投稿する</h2><a class="more" href="rules.html">投稿ルール</a></div>
+  <div class="form-wrap">
+    <form id="postForm">
+      <div class="form-grid">
+        <input id="nickname" placeholder="ニックネーム（匿名）" value="匿名さん" required>
+        <select id="category" required><option value="">カテゴリを選択</option><option>良いパパさん</option><option>注意したいパパさん</option><option>良いPJさん</option><option>注意したいPJさん</option></select>
+        <input id="area" placeholder="地域 例：東京都・新宿区" required>
+        <input id="title" placeholder="タイトル" required>
+        <select id="rating" required><option value="">評価</option><option value="5">★★★★★ 5</option><option value="4">★★★★☆ 4</option><option value="3">★★★☆☆ 3</option><option value="2">★★☆☆☆ 2</option><option value="1">★☆☆☆☆ 1</option></select>
+        <input id="photo" type="file" accept="image/*">
+      </div>
+      <p class="file-note">写真は1投稿につき1枚まで。顔・本名・LINE ID・電話番号・住所など個人が特定できる画像は禁止です。</p>
+      <textarea id="body" placeholder="体験談を入力してください。個人を特定する内容や誹謗中傷は禁止です。" required></textarea>
+      <p><label class="meta"><input id="agree" type="checkbox" required> 投稿ルールに同意します</label></p>
+      <button class="btn gold" type="submit">投稿する</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<a class="floating" href="#post">✎<br>投稿する</a>
+
+<div class="modal" id="reportModal"><div class="modal-card">
+  <h3>🚩 投稿を通報する</h3><p class="meta">不適切な投稿を運営に知らせます。</p>
+  <input id="reportReason" placeholder="理由 例：個人情報が含まれている">
+  <p><textarea id="reportDetails" placeholder="詳細があれば入力してください"></textarea></p>
+  <div class="modal-actions"><button class="btn" type="button" id="closeReport">閉じる</button><button class="btn danger" type="button" id="sendReport">通報する</button></div>
+  <div class="status" id="reportStatus"></div>
+</div></div>
+
+<footer class="footer"><div class="container"><b>今日のパパ日記</b><br>匿名で体験談を共有するコミュニティ。個人を特定する投稿・誹謗中傷・違法行為を助長する投稿は禁止です。<br><a href="rules.html">投稿ルール</a> ／ <a href="terms.html">利用規約</a> ／ <a href="privacy.html">プライバシーポリシー</a></div></footer>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>
