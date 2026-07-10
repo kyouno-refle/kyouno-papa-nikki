@@ -1,0 +1,14 @@
+【iPhoneでGitHubへV101を入れる手順】
+
+1. ZIPを「ファイル」アプリでタップして解凍
+2. GitHubの kyouno-papa-nikki リポジトリを開く
+3. 既存ファイルを削除するか、新しいリポジトリを作る
+4. Add file → Upload files
+5. 解凍したフォルダ内の package.json、wrangler.jsonc、public フォルダをアップロード
+6. Commit changes
+7. Cloudflareへ戻り、GitHubリポジトリを選択
+8. Build commandは空欄
+9. Deploy commandは npx wrangler deploy
+10. Deployを押す
+
+注意：ZIPそのものではなく、ZIPを解凍した「中身」をGitHubへアップロードします。
