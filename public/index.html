@@ -6,10 +6,10 @@
   <title>今日のパパ日記｜匿名でシェアする体験談コミュニティ</title>
   <meta name="description" content="匿名で体験談を共有できる口コミコミュニティです。">
   <meta name="theme-color" content="#080914">
-  <link rel="stylesheet" href="style.css?v=105">
+  <link rel="stylesheet" href="style.css?v=106">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js?v=105"></script>
-  <script src="app.js?v=105" defer></script>
+  <script src="config.js?v=106"></script>
+  <script src="app.js?v=106" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -171,8 +171,36 @@
       <strong>今日のパパ日記</strong><br>
       匿名で体験談を共有するコミュニティ。個人を特定する投稿・誹謗中傷は禁止です。<br>
       <a href="rules.html">投稿ルール</a> ／ <a href="terms.html">利用規約</a> ／ <a href="privacy.html">プライバシーポリシー</a><br>
-      <small>V105 会員機能完全版</small>
+      <small>V106 最終完成版・会員登録対応</small>
     </div>
   </footer>
+
+<script>
+(function(){
+  function ready(){
+    const modal=document.getElementById('authModal');
+    const login=document.getElementById('loginForm');
+    const register=document.getElementById('registerForm');
+    const recovery=document.getElementById('recoveryForm');
+    const loginTab=document.getElementById('loginTabBtn');
+    const registerTab=document.getElementById('registerTabBtn');
+    if(!modal||!login||!register) return;
+    function open(mode){
+      login.classList.toggle('hidden',mode!=='login');
+      register.classList.toggle('hidden',mode!=='register');
+      if(recovery) recovery.classList.add('hidden');
+      loginTab?.classList.toggle('active',mode==='login');
+      registerTab?.classList.toggle('active',mode==='register');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+    [['openLoginBtn','login'],['gateLoginBtn','login'],['openRegisterBtn','register'],['gateRegisterBtn','register']].forEach(([id,mode])=>{
+      document.getElementById(id)?.addEventListener('click',()=>open(mode));
+    });
+    window.PapaAuthUI={open};
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ready); else ready();
+})();
+</script>
 </body>
 </html>
