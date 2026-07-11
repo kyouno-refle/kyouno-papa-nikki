@@ -1,90 +1,206 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>今日のパパ日記｜匿名でシェアする体験談コミュニティ</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>今日のパパ日記｜匿名でシェアする体験談コミュニティ</title>
+  <meta name="description" content="匿名で体験談を共有できる口コミコミュニティです。">
+  <meta name="theme-color" content="#080914">
+  <link rel="stylesheet" href="style.css?v=106">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js?v=106"></script>
+  <script src="app.js?v=106" defer></script>
 </head>
 <body>
-<header class="header">
-  <div class="container hero-head">
-    <div class="logo">📖</div>
-    <div><div class="site-title">今日のパパ日記</div><div class="subtitle">匿名でシェアする体験談コミュニティ 💗</div></div>
-    <div class="auth"><a class="btn" href="#post">👤 ログイン</a><a class="btn primary" href="#post">無料会員登録</a></div>
-  </div>
-  <nav class="container nav">
-    <a class="active" href="#">🏠 ホーム</a><a href="#search">🔍 口コミを探す</a><a href="#ranking">♛ ランキング</a><a href="#post">🖊 投稿する</a><a href="rules.html">⚠ 投稿ルール</a>
-  </nav>
-</header>
-
-<main>
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="copy">
-        <h1>無料で口コミを書ける匿名コミュニティ。</h1>
-        <p>今日の出会いが、明日の参考になる。</p>
-        <div id="search" class="search-row"><div class="search">📍 <input id="searchInput" placeholder="地域・タイトル・カテゴリで検索"></div><button class="btn primary" id="searchBtn" type="button">検索</button></div>
+  <header class="site-header">
+    <div class="container topbar">
+      <div class="brand-wrap">
+        <div class="brand-icon">📖</div>
+        <div>
+          <div class="brand">今日のパパ日記</div>
+          <div class="tagline">匿名でシェアする体験談コミュニティ 💗</div>
+        </div>
       </div>
-      <div class="counter"><span>現在の投稿数</span><b id="postCount">---</b><small>Supabaseから自動表示</small></div>
-    </div>
-
-    <div class="categories">
-      <a class="cat green" href="#posts" data-category="良いパパさん"><div class="mark">👍</div><div><h3>良いパパさん</h3><p>優しくて紳士的だった✨</p></div></a>
-      <a class="cat red" href="#posts" data-category="注意したいパパさん"><div class="mark">⚠</div><div><h3>注意したいパパさん</h3><p>トラブル・要注意な体験</p></div></a>
-      <a class="cat pink" href="#posts" data-category="良いPJさん"><div class="mark">♡</div><div><h3>良いPJさん</h3><p>素敵な時間をありがとう💗</p></div></a>
-      <a class="cat orange" href="#posts" data-category="注意したいPJさん"><div class="mark">!</div><div><h3>注意したいPJさん</h3><p>気をつけてほしい体験</p></div></a>
-    </div>
-  </div>
-</section>
-
-<section class="container main">
-  <div class="panel" id="posts"><div class="panel-head"><h2>🕘 最新の投稿</h2><button class="more" id="reloadBtn" type="button">更新する</button></div><div class="posts" id="postsList"><p class="meta">投稿を読み込み中...</p></div></div>
-  <aside class="panel" id="ranking"><div class="panel-head"><h2>👑 人気投稿ランキング</h2></div><div class="ranking" id="rankingList"><small class="meta">投稿が増えると、人気順で表示されます。</small></div></aside>
-</section>
-
-<section class="container">
-  <div class="features">
-    <div class="feature"><span>♙</span><div>完全匿名で安心<br><small>個人情報は表示されません</small></div></div>
-    <div class="feature"><span>▧</span><div>写真は1枚まで<br><small>1投稿につき1枚アップ可能</small></div></div>
-    <div class="feature"><span>☆</span><div>利用無料<br><small>まずは無料で口コミを増やす設計</small></div></div>
-    <div class="feature"><span>▣</span><div>通報対応<br><small>投稿ごとに通報できます</small></div></div>
-  </div>
-</section>
-
-<section class="container panel" id="post">
-  <div class="panel-head"><h2>🖊 体験談を投稿する</h2><a class="more" href="rules.html">投稿ルール</a></div>
-  <div class="form-wrap">
-    <form id="postForm">
-      <div class="form-grid">
-        <input id="nickname" placeholder="ニックネーム（匿名）" value="匿名さん" required>
-        <select id="category" required><option value="">カテゴリを選択</option><option>良いパパさん</option><option>注意したいパパさん</option><option>良いPJさん</option><option>注意したいPJさん</option></select>
-        <input id="area" placeholder="地域 例：東京都・新宿区" required>
-        <input id="title" placeholder="タイトル" required>
-        <select id="rating" required><option value="">評価</option><option value="5">★★★★★ 5</option><option value="4">★★★★☆ 4</option><option value="3">★★★☆☆ 3</option><option value="2">★★☆☆☆ 2</option><option value="1">★☆☆☆☆ 1</option></select>
-        <input id="photo" type="file" accept="image/*">
+      <div class="auth-actions" id="authActions">
+        <button class="btn ghost" id="openLoginBtn" type="button">👤 ログイン</button>
+        <button class="btn primary" id="openRegisterBtn" type="button">無料会員登録</button>
       </div>
-      <p class="file-note">写真は1投稿につき1枚まで。顔・本名・LINE ID・電話番号・住所など個人が特定できる画像は禁止です。</p>
-      <textarea id="body" placeholder="体験談を入力してください。個人を特定する内容や誹謗中傷は禁止です。" required></textarea>
-      <p><label class="meta"><input id="agree" type="checkbox" required> 投稿ルールに同意します</label></p>
-      <button class="btn gold" type="submit">投稿する</button>
-      <div class="status" id="status"></div>
-    </form>
+    </div>
+    <nav class="container nav">
+      <a href="#top" class="active">🏠 ホーム</a>
+      <a href="#posts">🔍 口コミを探す</a>
+      <a href="#ranking">♛ ランキング</a>
+      <a href="#post">🖊 投稿する</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <h1>無料で口コミを書ける匿名コミュニティ。</h1>
+          <p>今日の出会いが、明日の参考になる。</p>
+          <div class="search-row">
+            <input id="searchInput" class="search-input" placeholder="地域・タイトル・カテゴリで検索">
+            <button id="searchBtn" class="btn primary" type="button">検索</button>
+          </div>
+        </div>
+        <div class="counter-card">
+          <span>現在の投稿数</span>
+          <strong id="postCount">−</strong>
+          <small>Supabaseから自動表示</small>
+        </div>
+      </div>
+      <div class="container category-grid">
+        <button class="category green" data-category="良いパパさん" type="button">👍 <span>良いパパさん</span></button>
+        <button class="category red" data-category="注意したいパパさん" type="button">⚠ <span>注意したいパパさん</span></button>
+        <button class="category pink" data-category="良いPJさん" type="button">♡ <span>良いPJさん</span></button>
+        <button class="category orange" data-category="注意したいPJさん" type="button">! <span>注意したいPJさん</span></button>
+      </div>
+    </section>
+
+    <section class="container content-grid">
+      <section class="panel" id="posts">
+        <div class="panel-head">
+          <h2>🕘 最新の投稿</h2>
+          <button id="reloadBtn" class="link-btn" type="button">更新する</button>
+        </div>
+        <div id="postsList" class="posts-list"><p class="muted">読み込み中...</p></div>
+      </section>
+
+      <aside class="panel" id="ranking">
+        <div class="panel-head"><h2>👑 人気投稿ランキング</h2></div>
+        <div id="rankingList" class="ranking-list"><p class="muted">読み込み中...</p></div>
+      </aside>
+    </section>
+
+    <section class="container panel post-panel" id="post">
+      <div id="postGate" class="post-gate">
+        <p>投稿には無料会員登録またはログインが必要です。</p>
+        <div>
+          <button class="btn ghost" id="gateLoginBtn" type="button">ログイン</button>
+          <button class="btn primary" id="gateRegisterBtn" type="button">無料会員登録</button>
+        </div>
+      </div>
+      <div class="panel-head"><h2>🖊 体験談を投稿する</h2><a href="rules.html">投稿ルール</a></div>
+      <form id="postForm" novalidate>
+        <div class="form-grid">
+          <input id="nickname" placeholder="ニックネーム（匿名）" maxlength="30" required>
+          <select id="category" required>
+            <option value="">カテゴリを選択</option>
+            <option>良いパパさん</option>
+            <option>注意したいパパさん</option>
+            <option>良いPJさん</option>
+            <option>注意したいPJさん</option>
+          </select>
+          <input id="area" placeholder="地域 例：東京都・新宿区" maxlength="60" required>
+          <input id="title" placeholder="タイトル" maxlength="100" required>
+          <select id="rating" required>
+            <option value="">評価</option>
+            <option value="5">★★★★★ 5</option>
+            <option value="4">★★★★☆ 4</option>
+            <option value="3">★★★☆☆ 3</option>
+            <option value="2">★★☆☆☆ 2</option>
+            <option value="1">★☆☆☆☆ 1</option>
+          </select>
+          <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+        </div>
+        <textarea id="body" rows="7" maxlength="3000" placeholder="体験談を入力してください。個人を特定する内容や誹謗中傷は禁止です。" required></textarea>
+        <label class="check-row"><input id="agree" type="checkbox" required> 投稿ルールに同意します</label>
+        <button class="btn gold" type="submit">投稿する</button>
+        <div id="postStatus" class="status" role="status"></div>
+      </form>
+    </section>
+  </main>
+
+  <button class="floating-post" id="floatingPostBtn" type="button">✎<br>投稿する</button>
+
+  <div class="modal" id="authModal" aria-hidden="true">
+    <div class="modal-card auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" id="closeAuthBtn" type="button" aria-label="閉じる">×</button>
+      <div class="tabs">
+        <button id="loginTabBtn" class="tab active" type="button">ログイン</button>
+        <button id="registerTabBtn" class="tab" type="button">無料会員登録</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <h3 id="authTitle">👤 ログイン</h3>
+        <input id="loginEmail" type="email" autocomplete="email" placeholder="メールアドレス" required>
+        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="パスワード" minlength="6" required>
+        <button class="btn primary full" type="submit">ログインする</button>
+        <button id="forgotPasswordBtn" class="text-btn" type="button">パスワードを忘れた方</button>
+        <div id="loginStatus" class="status" role="status"></div>
+      </form>
+
+      <form id="registerForm" class="auth-form hidden">
+        <h3>✨ 無料会員登録</h3>
+        <input id="registerNickname" placeholder="ニックネーム" maxlength="30" required>
+        <input id="registerEmail" type="email" autocomplete="email" placeholder="メールアドレス" required>
+        <input id="registerPassword" type="password" autocomplete="new-password" placeholder="パスワード（6文字以上）" minlength="6" required>
+        <label class="check-row"><input id="registerAgree" type="checkbox" required> <a href="terms.html" target="_blank">利用規約</a>と<a href="privacy.html" target="_blank">プライバシーポリシー</a>に同意します</label>
+        <button class="btn primary full" type="submit">無料会員登録する</button>
+        <div id="registerStatus" class="status" role="status"></div>
+      </form>
+
+      <form id="recoveryForm" class="auth-form hidden">
+        <h3>🔐 新しいパスワード</h3>
+        <input id="newPassword" type="password" autocomplete="new-password" placeholder="新しいパスワード（6文字以上）" minlength="6" required>
+        <button class="btn primary full" type="submit">パスワードを更新する</button>
+        <div id="recoveryStatus" class="status" role="status"></div>
+      </form>
+    </div>
   </div>
-</section>
-</main>
 
-<a class="floating" href="#post">✎<br>投稿する</a>
+  <div class="modal" id="mypageModal" aria-hidden="true">
+    <div class="modal-card mypage-card" role="dialog" aria-modal="true" aria-labelledby="mypageTitle">
+      <button class="modal-close" id="closeMypageBtn" type="button" aria-label="閉じる">×</button>
+      <h3 id="mypageTitle">👤 マイページ</h3>
+      <div class="profile-box"><strong id="mypageNickname">会員</strong><span id="mypageEmail"></span></div>
+      <div class="mypage-actions">
+        <button class="btn ghost" id="refreshMyPostsBtn" type="button">自分の投稿を更新</button>
+        <button class="btn danger" id="logoutBtn" type="button">ログアウト</button>
+      </div>
+      <h4>自分の投稿</h4>
+      <div id="myPostsList"><p class="muted">読み込み中...</p></div>
+      <div id="mypageStatus" class="status"></div>
+    </div>
+  </div>
 
-<div class="modal" id="reportModal"><div class="modal-card">
-  <h3>🚩 投稿を通報する</h3><p class="meta">不適切な投稿を運営に知らせます。</p>
-  <input id="reportReason" placeholder="理由 例：個人情報が含まれている">
-  <p><textarea id="reportDetails" placeholder="詳細があれば入力してください"></textarea></p>
-  <div class="modal-actions"><button class="btn" type="button" id="closeReport">閉じる</button><button class="btn danger" type="button" id="sendReport">通報する</button></div>
-  <div class="status" id="reportStatus"></div>
-</div></div>
+  <footer class="footer">
+    <div class="container">
+      <strong>今日のパパ日記</strong><br>
+      匿名で体験談を共有するコミュニティ。個人を特定する投稿・誹謗中傷は禁止です。<br>
+      <a href="rules.html">投稿ルール</a> ／ <a href="terms.html">利用規約</a> ／ <a href="privacy.html">プライバシーポリシー</a><br>
+      <small>V106 最終完成版・会員登録対応</small>
+    </div>
+  </footer>
 
-<footer class="footer"><div class="container"><b>今日のパパ日記</b><br>匿名で体験談を共有するコミュニティ。個人を特定する投稿・誹謗中傷・違法行為を助長する投稿は禁止です。<br><a href="rules.html">投稿ルール</a> ／ <a href="terms.html">利用規約</a> ／ <a href="privacy.html">プライバシーポリシー</a></div></footer>
-<script src="config.js"></script><script src="app.js"></script>
-</body></html>
+<script>
+(function(){
+  function ready(){
+    const modal=document.getElementById('authModal');
+    const login=document.getElementById('loginForm');
+    const register=document.getElementById('registerForm');
+    const recovery=document.getElementById('recoveryForm');
+    const loginTab=document.getElementById('loginTabBtn');
+    const registerTab=document.getElementById('registerTabBtn');
+    if(!modal||!login||!register) return;
+    function open(mode){
+      login.classList.toggle('hidden',mode!=='login');
+      register.classList.toggle('hidden',mode!=='register');
+      if(recovery) recovery.classList.add('hidden');
+      loginTab?.classList.toggle('active',mode==='login');
+      registerTab?.classList.toggle('active',mode==='register');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+    [['openLoginBtn','login'],['gateLoginBtn','login'],['openRegisterBtn','register'],['gateRegisterBtn','register']].forEach(([id,mode])=>{
+      document.getElementById(id)?.addEventListener('click',()=>open(mode));
+    });
+    window.PapaAuthUI={open};
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ready); else ready();
+})();
+</script>
+</body>
+</html>
